@@ -1,0 +1,28 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+<main id="main" class="section admin-main">
+  <div class="container admin-layout">
+    <%- include('../partials/admin-sidebar') %>
+    <div class="admin-content">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/admin/messages">Enquiries</a><span aria-hidden="true">/</span><span aria-current="page">#<%= message.id %></span></nav>
+      <div class="admin-page-head">
+        <h1 class="admin-h1"><%= message.subject %></h1>
+        <p class="muted">From <strong><%= message.name %></strong> &lt;<a class="text-link" href="mailto:<%= message.email %>"><%= message.email %></a>&gt; · <%= new Date(message.created_at.replace(' ', 'T') + 'Z').toLocaleString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %></p>
+      </div>
+
+      <div class="panel message-body"><p><%= message.message %></p></div>
+
+      <div class="row-actions mt">
+        <a class="btn btn-outline btn-sm" href="mailto:<%= message.email %>?subject=Re: <%= encodeURIComponent(message.subject) %>">Reply by email</a>
+        <form method="POST" action="/admin/messages/<%= message.id %>/status" class="inline-form"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="status" value="read"><button type="submit" class="mini-btn">Mark read</button></form>
+        <form method="POST" action="/admin/messages/<%= message.id %>/status" class="inline-form"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="status" value="archived"><button type="submit" class="mini-btn">Archive</button></form>
+        <form method="POST" action="/admin/messages/<%= message.id %>/delete" class="inline-form" data-confirm="Delete this enquiry permanently?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="mini-btn danger">Delete</button></form>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

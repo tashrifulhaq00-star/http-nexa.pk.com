@@ -1,0 +1,61 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+<main id="main" class="section admin-main">
+  <div class="container admin-layout">
+    <%- include('../partials/admin-sidebar') %>
+    <div class="admin-content">
+      <div class="admin-page-head"><h1 class="admin-h1">Enquiries</h1><p class="muted">Everything submitted through the contact form.</p></div>
+
+      <div class="filter-tabs" role="tablist" aria-label="Filter by status">
+        <a href="/admin/messages" class="filter-tab <%= !status ? 'is-active' : '' %>">All <span><%= counts.all %></span></a>
+        <a href="/admin/messages?status=new" class="filter-tab <%= status === 'new' ? 'is-active' : '' %>">New <span><%= counts.new %></span></a>
+        <a href="/admin/messages?status=read" class="filter-tab <%= status === 'read' ? 'is-active' : '' %>">Read <span><%= counts.read %></span></a>
+        <a href="/admin/messages?status=archived" class="filter-tab <%= status === 'archived' ? 'is-active' : '' %>">Archived <span><%= counts.archived %></span></a>
+      </div>
+
+      <form class="toolbar" method="GET" action="/admin/messages" role="search">
+        <% if (status) { %><input type="hidden" name="status" value="<%= status %>"><% } %>
+        <input type="search" name="q" value="<%= q %>" placeholder="Search name, email, subject…" aria-label="Search enquiries">
+        <button type="submit" class="btn btn-outline btn-sm">Search</button>
+        <% if (q) { %><a class="btn btn-ghost btn-sm" href="/admin/messages<%= status ? '?status=' + status : '' %>">Clear</a><% } %>
+      </form>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Received</th><th>From</th><th>Subject</th><th>Status</th><th class="ta-right">Actions</th></tr></thead>
+          <tbody>
+            <% messages.forEach(function(m) { %>
+              <tr>
+                <td><%= new Date(m.created_at.replace(' ', 'T') + 'Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) %></td>
+                <td><strong><%= m.name %></strong><br><small class="muted"><%= m.email %></small></td>
+                <td class="cell-clip"><%= m.subject %></td>
+                <td><span class="status-pill status-<%= m.status %>"><%= m.status %></span></td>
+                <td class="ta-right">
+                  <div class="row-actions">
+                    <a class="mini-btn" href="/admin/messages/<%= m.id %>">Open</a>
+                    <form method="POST" action="/admin/messages/<%= m.id %>/status"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="from" value="list"><input type="hidden" name="status" value="<%= m.status === 'archived' ? 'read' : 'archived' %>"><button type="submit" class="mini-btn"><%= m.status === 'archived' ? 'Unarchive' : 'Archive' %></button></form>
+                    <form method="POST" action="/admin/messages/<%= m.id %>/delete" data-confirm="Delete this enquiry permanently?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="mini-btn danger">Delete</button></form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+            <% if (messages.length === 0) { %><tr><td colspan="5" class="muted">Nothing here. Enjoy the silence.</td></tr><% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <% if (pages > 1) { %>
+        <nav class="pagination" aria-label="Pagination">
+          <% for (let p = 1; p <= pages; p++) { %>
+            <a href="/admin/messages?page=<%= p %><%= status ? '&status=' + status : '' %><%= q ? '&q=' + encodeURIComponent(q) : '' %>" class="page-link <%= p === page ? 'is-active' : '' %>" <%= p === page ? 'aria-current="page"' : '' %>><%= p %></a>
+          <% } %>
+        </nav>
+      <% } %>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

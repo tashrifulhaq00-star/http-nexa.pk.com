@@ -1,0 +1,64 @@
+<%- include('partials/head') %>
+<main id="main" class="auth-layout">
+  <aside class="auth-visual" aria-hidden="true">
+    <a class="brand brand-light" href="/">
+      <svg class="brand-mark" viewBox="0 0 48 48" width="34" height="34"><path fill="url(#lg-reg)" d="M24 2 43 13.5v21L24 46 5 34.5v-21L24 2Z"/><defs><linearGradient id="lg-reg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><path fill="#0b1020" d="M15.5 33V15h4.6l9.4 12.6V15H34v18h-4.6l-9.4-12.6V33h-4.5Z"/></svg>
+      <span class="brand-text">Nexora<span class="brand-accent">Digital</span></span>
+    </a>
+    <div class="auth-visual-body">
+      <h1>Let's build<br>your next<br>chapter.</h1>
+      <p>Create your client account to brief us, track proposals and follow your project from kickoff to launch.</p>
+      <ul class="auth-points">
+        <li>Free 30-minute discovery call</li>
+        <li>Fixed-scope proposal within 48 hours</li>
+        <li>Zero spam — your data stays private</li>
+      </ul>
+    </div>
+    <p class="auth-footnote">Passwords are hashed with bcrypt (12 rounds). We never store them in plain sight.</p>
+  </aside>
+
+  <section class="auth-panel">
+    <%- include('partials/flash') %>
+    <div class="auth-card">
+      <h2>Create your account</h2>
+      <p class="muted">Already registered? <a class="text-link" href="/login">Sign in →</a></p>
+
+      <% if (errors && errors.length) { %>
+        <div class="alert alert-error" role="alert"><ul class="error-list"><% errors.forEach(function(e) { %><li><%= e %></li><% }) %></ul></div>
+      <% } %>
+
+      <form method="POST" action="/register" novalidate>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="field">
+          <label for="r-name">Full name</label>
+          <input id="r-name" name="name" type="text" required minlength="2" maxlength="80" value="<%= form.name %>" autocomplete="name" autofocus placeholder="Ayesha Khan">
+        </div>
+        <div class="field">
+          <label for="r-email">Work email</label>
+          <input id="r-email" name="email" type="email" required maxlength="160" value="<%= form.email %>" autocomplete="email" placeholder="you@company.com">
+        </div>
+        <div class="field">
+          <label for="r-password">Password</label>
+          <div class="password-wrap">
+            <input id="r-password" name="password" type="password" required minlength="8" maxlength="128" autocomplete="new-password" placeholder="Min 8 chars, 1 upper, 1 lower, 1 digit">
+            <button type="button" class="toggle-password" aria-label="Show password" aria-pressed="false">Show</button>
+          </div>
+          <div class="strength-meter" aria-hidden="true"><span id="strengthBar"></span></div>
+          <p class="strength-label" id="strengthLabel">Password strength</p>
+        </div>
+        <div class="field">
+          <label for="r-confirm">Confirm password</label>
+          <input id="r-confirm" name="confirm" type="password" required minlength="8" maxlength="128" autocomplete="new-password" placeholder="Repeat your password">
+        </div>
+        <label class="checkbox-row" for="r-terms">
+          <input id="r-terms" name="terms" type="checkbox" required>
+          <span>I agree to the <a href="/terms" class="text-link">Terms &amp; Conditions</a> and <a href="/privacy" class="text-link">Privacy Policy</a>.</span>
+        </label>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Create account <%- icon('arrow-right', 18) %></button>
+      </form>
+    </div>
+  </section>
+</main>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

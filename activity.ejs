@@ -1,0 +1,40 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+<main id="main" class="section admin-main">
+  <div class="container admin-layout">
+    <%- include('../partials/admin-sidebar') %>
+    <div class="admin-content">
+      <div class="admin-page-head"><h1 class="admin-h1">Audit log</h1><p class="muted">Every privileged action, in order. <%= total %> entries total.</p></div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>When</th><th>Admin</th><th>Action</th><th>Target</th></tr></thead>
+          <tbody>
+            <% activity.forEach(function(a) { %>
+              <tr>
+                <td><%= new Date(a.created_at.replace(' ', 'T') + 'Z').toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) %></td>
+                <td><%= a.admin_name %></td>
+                <td><code><%= a.action %></code></td>
+                <td class="cell-clip" title="<%= a.target %>"><%= a.target %></td>
+              </tr>
+            <% }) %>
+            <% if (activity.length === 0) { %><tr><td colspan="4" class="muted">No activity recorded yet.</td></tr><% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <% if (pages > 1) { %>
+        <nav class="pagination" aria-label="Pagination">
+          <% for (let p = 1; p <= pages; p++) { %>
+            <a href="/admin/activity?page=<%= p %>" class="page-link <%= p === page ? 'is-active' : '' %>" <%= p === page ? 'aria-current="page"' : '' %>><%= p %></a>
+          <% } %>
+        </nav>
+      <% } %>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

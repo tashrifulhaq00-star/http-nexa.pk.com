@@ -1,0 +1,21 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+<%- include('partials/flash') %>
+<% const heading = code === 403 ? 'Access denied' : code === 404 ? 'Page not found' : 'Something went wrong'; %>
+<main id="main" class="section">
+  <div class="container">
+    <div class="error-page">
+      <p class="error-code"><%= code %></p>
+      <h1><%= heading %></h1>
+      <p class="muted"><%= message %></p>
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">Back to homepage</a>
+        <a href="/contact" class="btn btn-outline">Contact support</a>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

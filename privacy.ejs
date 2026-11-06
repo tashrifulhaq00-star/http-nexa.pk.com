@@ -1,0 +1,61 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+<%- include('partials/flash') %>
+<main id="main" class="section">
+  <div class="container legal">
+    <span class="kicker">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="muted">Last updated: 1 November 2026 · Nexora Digital (Pvt.) Ltd.</p>
+
+    <h2>1. Who we are</h2>
+    <p>Nexora Digital (Pvt.) Ltd. (“Nexora”, “we”, “us”), Office 4, Pak Tower, Saddar Road, Peshawar 25000, Pakistan, is the data controller for information collected through this website and our services. You can reach our privacy officer at <a class="text-link" href="mailto:privacy@nexora.digital">privacy@nexora.digital</a>.</p>
+
+    <h2>2. What we collect</h2>
+    <ul>
+      <li><strong>Account data</strong> — name, email, hashed password, optional phone/title/bio and profile photo if you create an account.</li>
+      <li><strong>Enquiry data</strong> — anything you type into our contact form, plus your IP address for abuse prevention.</li>
+      <li><strong>Newsletter data</strong> — your email address if you subscribe to The Nexora Brief.</li>
+      <li><strong>Technical data</strong> — standard server logs (time, path, status code, anonymised IP) retained for 90 days for security monitoring.</li>
+      <li><strong>Cookies</strong> — a single strictly-necessary session cookie (<code>nexora.sid</code>, httpOnly, SameSite=Lax). We do not use advertising or cross-site tracking cookies.</li>
+    </ul>
+
+    <h2>3. How we use your data</h2>
+    <ul>
+      <li>To respond to enquiries and deliver contracted services (legitimate interest / contract).</li>
+      <li>To authenticate you and keep your account secure (legitimate interest).</li>
+      <li>To send the newsletter you opted into (consent). Unsubscribe anytime by replying “unsubscribe”.</li>
+      <li>To detect and prevent abuse, fraud and security incidents (legitimate interest).</li>
+      <li>To meet legal and regulatory obligations under Pakistani law (legal obligation).</li>
+    </ul>
+
+    <h2>4. What we never do</h2>
+    <ul>
+      <li>We never sell your personal data.</li>
+      <li>We never send marketing without consent, and every email includes an opt-out.</li>
+      <li>We never store passwords in plain text — they are hashed with bcrypt (12 rounds) and never recoverable.</li>
+      <li>We never expose secrets, keys or credentials to browsers; all secrets live in server-side environment variables.</li>
+    </ul>
+
+    <h2>5. Storage, retention &amp; transfers</h2>
+    <p>Data is stored in our primary database in Pakistan and, where applicable for hosted deployments, in your chosen hosting region (e.g., EU or US for free-tier hosts). We retain account data while your account is active and for 24 months afterwards, enquiry data for 36 months, and logs for 90 days. Backups age out after 30 days via automated rotation.</p>
+
+    <h2>6. Your rights</h2>
+    <p>Subject to applicable law (including the Prevention of Electronic Crimes Act 2016 and, where in scope, GDPR/UK GDPR), you may request access, correction, export, erasure or restriction of your personal data, or object to processing. Email <a class="text-link" href="mailto:privacy@nexora.digital">privacy@nexora.digital</a> — we respond within 30 days. You may also lodge a complaint with the Pakistan Telecommunication Authority (PTA).</p>
+
+    <h2>7. Security</h2>
+    <p>We apply defence-in-depth: bcrypt password hashing, server-side sessions, CSRF tokens, strict Content Security Policy, rate limiting, prepared SQL statements with input validation, dependency scanning and least-privilege database access. See our README for the full technical control list. No system is perfectly secure; report suspected vulnerabilities to <a class="text-link" href="mailto:security@nexora.digital">security@nexora.digital</a>.</p>
+
+    <h2>8. Children</h2>
+    <p>This website is not directed at children under 16, and we do not knowingly collect their data. If you believe a child has provided data, contact us and we will delete it.</p>
+
+    <h2>9. Changes to this policy</h2>
+    <p>We may update this policy; material changes will be announced on this page with a new “last updated” date. Continued use after changes constitutes acceptance.</p>
+
+    <h2>10. Contact</h2>
+    <p>Privacy officer: <a class="text-link" href="mailto:privacy@nexora.digital">privacy@nexora.digital</a> · Office 4, Pak Tower, Saddar Road, Peshawar 25000, Pakistan.</p>
+  </div>
+</main>
+<%- include('partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

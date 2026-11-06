@@ -1,0 +1,46 @@
+<header class="nav-wrap" id="top">
+  <nav class="nav container" aria-label="Primary navigation">
+    <a class="brand" href="/" aria-label="Nexora Digital — home">
+      <svg class="brand-mark" viewBox="0 0 48 48" width="38" height="38" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg-nav" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#4f46e5"/><stop offset="1" stop-color="#06b6d4"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#lg-nav)" d="M24 2 43 13.5v21L24 46 5 34.5v-21L24 2Z"/>
+        <path fill="#fff" d="M15.5 33V15h4.6l9.4 12.6V15H34v18h-4.6l-9.4-12.6V33h-4.5Z"/>
+      </svg>
+      <span class="brand-text">Nexora<span class="brand-accent">Digital</span></span>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="/" class="<%= active === 'home' ? 'is-active' : '' %>" <%= active === 'home' ? 'aria-current="page"' : '' %>>Home</a></li>
+        <li><a href="/about" class="<%= active === 'about' ? 'is-active' : '' %>" <%= active === 'about' ? 'aria-current="page"' : '' %>>About</a></li>
+        <li><a href="/services" class="<%= active === 'services' ? 'is-active' : '' %>" <%= active === 'services' ? 'aria-current="page"' : '' %>>Services</a></li>
+        <li><a href="/contact" class="<%= active === 'contact' ? 'is-active' : '' %>" <%= active === 'contact' ? 'aria-current="page"' : '' %>>Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark and light mode" title="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        </button>
+        <% if (user) { %>
+          <% if (user.role === 'admin') { %><a class="btn btn-ghost btn-sm" href="/admin">Admin</a><% } %>
+          <a class="btn btn-ghost btn-sm" href="/dashboard">Dashboard</a>
+          <form method="POST" action="/logout" class="inline-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" class="btn btn-sm btn-outline">Log out</button>
+          </form>
+        <% } else { %>
+          <a class="btn btn-ghost btn-sm" href="/login">Sign in</a>
+          <a class="btn btn-primary btn-sm" href="/contact">Get a quote</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+</header>

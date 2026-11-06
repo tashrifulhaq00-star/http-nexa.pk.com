@@ -1,0 +1,57 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+<main id="main" class="section admin-main">
+  <div class="container admin-layout">
+    <%- include('../partials/admin-sidebar') %>
+    <div class="admin-content">
+      <div class="admin-page-head"><h1 class="admin-h1">Overview</h1><p class="muted">Live pulse of the site and the studio.</p></div>
+
+      <div class="stat-cards admin-stats">
+        <div class="stat-card"><span class="stat-value"><%= stats.users %></span><span class="stat-label">Total users</span></div>
+        <div class="stat-card"><span class="stat-value"><%= stats.activeUsers %></span><span class="stat-label">Active accounts</span></div>
+        <div class="stat-card"><span class="stat-value"><%= stats.services %></span><span class="stat-label">Live services</span></div>
+        <div class="stat-card highlight"><span class="stat-value"><%= stats.newMessages %></span><span class="stat-label">New enquiries</span></div>
+        <div class="stat-card"><span class="stat-value"><%= stats.totalMessages %></span><span class="stat-label">Total enquiries</span></div>
+        <div class="stat-card"><span class="stat-value"><%= stats.subscribers %></span><span class="stat-label">Subscribers</span></div>
+      </div>
+
+      <div class="admin-two-col">
+        <section class="panel" aria-labelledby="recent-msg">
+          <div class="table-head"><h2 id="recent-msg">Latest enquiries</h2><a class="text-link sm" href="/admin/messages">View all →</a></div>
+          <% if (recentMessages.length === 0) { %><p class="muted">No enquiries yet.</p><% } else { %>
+            <ul class="mini-list">
+              <% recentMessages.forEach(function(m) { %>
+                <li><a href="/admin/messages/<%= m.id %>"><strong><%= m.name %></strong> — <%= m.subject %><small><%= new Date(m.created_at.replace(' ', 'T') + 'Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) %> · <span class="status-pill status-<%= m.status %>"><%= m.status %></span></small></a></li>
+              <% }) %>
+            </ul>
+          <% } %>
+        </section>
+
+        <section class="panel" aria-labelledby="recent-users">
+          <div class="table-head"><h2 id="recent-users">Newest members</h2><a class="text-link sm" href="/admin/users">Manage →</a></div>
+          <ul class="mini-list">
+            <% recentUsers.forEach(function(u) { %>
+              <li><span><strong><%= u.name %></strong> <span class="role-pill"><%= u.role %></span><small><%= u.email %></small></span></li>
+            <% }) %>
+          </ul>
+        </section>
+      </div>
+
+      <section class="panel mt" aria-labelledby="activity-title">
+        <div class="table-head"><h2 id="activity-title">Recent admin activity</h2><a class="text-link sm" href="/admin/activity">Full log →</a></div>
+        <% if (activity.length === 0) { %><p class="muted">No privileged actions recorded yet.</p><% } else { %>
+          <ul class="activity-list">
+            <% activity.forEach(function(a) { %>
+              <li><code><%= a.action %></code><span class="activity-target"><%= a.target %></span><small><%= a.admin_name %> · <%= new Date(a.created_at.replace(' ', 'T') + 'Z').toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) %></small></li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </section>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

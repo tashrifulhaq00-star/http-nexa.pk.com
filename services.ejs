@@ -1,0 +1,46 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+<%- include('partials/flash') %>
+<main id="main">
+  <header class="page-hero">
+    <div class="container">
+      <span class="kicker">Services</span>
+      <h1>Everything you need.<br><span class="gradient-text">Nothing you don't.</span></h1>
+      <p class="page-hero-sub">Six integrated practices — design, engineering, growth, brand and cloud — delivered by one accountable team.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="services-detail-grid">
+        <% services.forEach(function(s, i) { %>
+          <article class="service-detail-card">
+            <div class="sdc-head">
+              <span class="service-icon"><%- icon(s.icon, 28) %></span>
+              <div><h2><a href="/services/<%= s.slug %>"><%= s.title %></a></h2><p class="muted sdc-tagline"><%= s.tagline %></p></div>
+              <span class="price-pill"><%= s.price %></span>
+            </div>
+            <p><%= s.description %></p>
+            <ul class="feature-chips">
+              <% s.features.forEach(function(f) { %><li><%- icon('check', 13) %> <%= f %></li><% }) %>
+            </ul>
+            <a class="btn btn-outline btn-sm" href="/services/<%= s.slug %>">Service details <%- icon('arrow-right', 14) %></a>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-panel">
+        <div><h2>Not sure what you need?</h2><p>We'll diagnose it in 30 minutes and scope the smallest thing that moves the needle.</p></div>
+        <a href="/contact" class="btn btn-light btn-lg">Get a free consultation <%- icon('arrow-right', 18) %></a>
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

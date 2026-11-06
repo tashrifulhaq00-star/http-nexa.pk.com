@@ -1,0 +1,66 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+<main id="main" class="section admin-main">
+  <div class="container admin-layout">
+    <%- include('../partials/admin-sidebar') %>
+    <div class="admin-content">
+      <div class="admin-page-head"><h1 class="admin-h1">Users</h1><p class="muted"><%= total %> account<%= total === 1 ? '' : 's' %> found.</p></div>
+
+      <% if (tempPassword) { %>
+        <div class="alert alert-info temp-password-box" role="status">
+          <div>
+            <strong>Temporary password for <%= tempPasswordFor %></strong> — shown only once. Copy it now and share via a secure channel:
+            <code class="temp-password"><%= tempPassword %></code>
+          </div>
+        </div>
+      <% } %>
+
+      <form class="toolbar" method="GET" action="/admin/users" role="search">
+        <input type="search" name="q" value="<%= q %>" placeholder="Search name or email…" aria-label="Search users">
+        <button type="submit" class="btn btn-outline btn-sm">Search</button>
+        <% if (q) { %><a class="btn btn-ghost btn-sm" href="/admin/users">Clear</a><% } %>
+      </form>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>User</th><th>Role</th><th>Status</th><th>Joined</th><th>Last login</th><th class="ta-right">Actions</th></tr></thead>
+          <tbody>
+            <% users.forEach(function(u) { %>
+              <tr>
+                <td><strong><%= u.name %></strong><br><small class="muted"><%= u.email %></small></td>
+                <td><span class="role-pill <%= u.role === 'admin' ? 'role-admin' : '' %>"><%= u.role %></span></td>
+                <td><span class="status-pill <%= u.is_active ? 'status-read' : 'status-archived' %>"><%= u.is_active ? 'active' : 'disabled' %></span></td>
+                <td><%= new Date(u.created_at.replace(' ', 'T') + 'Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) %></td>
+                <td><%= u.last_login_at ? new Date(u.last_login_at.replace(' ', 'T') + 'Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : 'never' %></td>
+                <td class="ta-right">
+                  <div class="row-actions">
+                    <% if (u.id !== user.id) { %>
+                      <form method="POST" action="/admin/users/<%= u.id %>/role"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="mini-btn" title="Toggle admin role"><%= u.role === 'admin' ? 'Demote' : 'Promote' %></button></form>
+                      <form method="POST" action="/admin/users/<%= u.id %>/toggle-active"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="mini-btn" title="Enable/disable account"><%= u.is_active ? 'Disable' : 'Enable' %></button></form>
+                      <form method="POST" action="/admin/users/<%= u.id %>/reset-password"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="mini-btn" title="Generate temporary password">Reset PW</button></form>
+                      <form method="POST" action="/admin/users/<%= u.id %>/delete" data-confirm="Permanently delete <%= u.name %>? This cannot be undone."><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="mini-btn danger">Delete</button></form>
+                    <% } else { %><span class="muted sm">This is you</span><% } %>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+            <% if (users.length === 0) { %><tr><td colspan="6" class="muted">No users match that search.</td></tr><% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <% if (pages > 1) { %>
+        <nav class="pagination" aria-label="Pagination">
+          <% for (let p = 1; p <= pages; p++) { %>
+            <a href="/admin/users?page=<%= p %><%= q ? '&q=' + encodeURIComponent(q) : '' %>" class="page-link <%= p === page ? 'is-active' : '' %>" aria-label="Page <%= p %>" <%= p === page ? 'aria-current="page"' : '' %>><%= p %></a>
+          <% } %>
+        </nav>
+      <% } %>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

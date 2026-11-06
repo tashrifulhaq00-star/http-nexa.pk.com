@@ -1,0 +1,35 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+<main id="main" class="section admin-main">
+  <div class="container admin-layout">
+    <%- include('../partials/admin-sidebar') %>
+    <div class="admin-content">
+      <div class="admin-page-head">
+        <h1 class="admin-h1">Subscribers</h1>
+        <p class="muted"><%= subscribers.length %> newsletter subscriber<%= subscribers.length === 1 ? '' : 's' %>.</p>
+      </div>
+      <div class="row-actions"><a class="btn btn-primary btn-sm" href="/admin/subscribers.csv" download>Download CSV</a></div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Email</th><th>Subscribed</th><th class="ta-right">Actions</th></tr></thead>
+          <tbody>
+            <% subscribers.forEach(function(s) { %>
+              <tr>
+                <td><%= s.email %></td>
+                <td><%= new Date(s.created_at.replace(' ', 'T') + 'Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) %></td>
+                <td class="ta-right"><form method="POST" action="/admin/subscribers/<%= s.id %>/delete" class="inline-form" data-confirm="Remove <%= s.email %> from the list?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="mini-btn danger">Remove</button></form></td>
+              </tr>
+            <% }) %>
+            <% if (subscribers.length === 0) { %><tr><td colspan="3" class="muted">No subscribers yet. The footer signup form is live on every page.</td></tr><% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

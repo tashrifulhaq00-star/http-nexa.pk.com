@@ -1,0 +1,95 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+<%- include('partials/flash') %>
+<main id="main">
+
+  <header class="page-hero">
+    <div class="container">
+      <span class="kicker">About us</span>
+      <h1>Small team.<br><span class="gradient-text">Outsized impact.</span></h1>
+      <p class="page-hero-sub">Founded in 2012 in Peshawar, Nexora Digital has grown from a two-person web shop into a 30-strong team designing and shipping products for clients across Pakistan, the Gulf, Europe and North America.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container about-split">
+      <figure class="about-photo">
+        <img src="/img/studio.jpg" alt="The Nexora Digital studio in Peshawar — designers and engineers collaborating at large monitors" width="960" height="720" loading="lazy">
+      </figure>
+      <div>
+        <span class="kicker">Our story</span>
+        <h2>From freelance desk to full-service studio</h2>
+        <p>We started because great software was priced out of reach for local businesses. Fourteen years and 130+ launches later, we still operate like the early days: senior people, direct communication, and a stubborn refusal to ship mediocre work.</p>
+        <p>Today we're a hybrid studio — designers, engineers, SEO strategists and DevOps engineers under one roof — working with clients from pre-seed startups to listed conglomerates.</p>
+        <ul class="tick-row">
+          <li>Certified: ISO 27001-aligned delivery</li>
+          <li>Google Partner &amp; Meta Business Partner</li>
+          <li>Registered with PSEB (Pakistan Software Export Board)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" aria-labelledby="values-title">
+    <div class="container">
+      <div class="section-head center"><div><span class="kicker">What we stand for</span><h2 id="values-title">Our values, in plain words</h2></div></div>
+      <div class="values-grid">
+        <article class="value-card"><h3>01 — Craft over noise</h3><p>We sweat the details: performance budgets, empty states, error handling, keyboard paths. Quality is a habit, not a phase.</p></article>
+        <article class="value-card"><h3>02 — Honesty, always</h3><p>Fixed quotes, visible progress, candid advice — even when it means talking you out of a feature you asked for.</p></article>
+        <article class="value-card"><h3>03 — Security by default</h3><p>Hashed credentials, encrypted secrets, audited dependencies and least-privilege access on every project, every time.</p></article>
+        <article class="value-card"><h3>04 — Ownership mindset</h3><p>We treat your product, budget and users as our own. Your metrics are our scoreboard.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="team-title">
+    <div class="container">
+      <div class="section-head"><div><span class="kicker">The team</span><h2 id="team-title">People you'll actually work with</h2></div></div>
+      <div class="team-grid">
+        <% const team = [
+          { name: 'Danial Afridi', role: 'Founder & Managing Director', initials: 'DA', bio: 'Ex-Careem engineer. Obsessed with calm, reliable delivery.' },
+          { name: 'Mehwish Riaz', role: 'Head of Design', initials: 'MR', bio: 'Design systems evangelist. Previously at Netsol and Systems Ltd.' },
+          { name: 'Usman Tariq', role: 'Lead Engineer', initials: 'UT', bio: 'Full-stack polyglot; Node, Go and Postgres whisperer.' },
+          { name: 'Zoya Sheikh', role: 'SEO & Growth Lead', initials: 'ZS', bio: 'Turns technical SEO into pipeline for 40+ brands.' },
+          { name: 'Ahmed Raza', role: 'DevOps & Cloud', initials: 'AR', bio: 'Kubernetes, Terraform and 3 a.m. pages nobody receives.' },
+          { name: 'Laiba Khan', role: 'Project Manager', initials: 'LK', bio: 'Sprints that never slip silently. Your single accountable point of contact.' }
+        ]; %>
+        <% team.forEach(function(m) { %>
+          <article class="team-card">
+            <span class="avatar-initials lg" aria-hidden="true"><%= m.initials %></span>
+            <h3><%= m.name %></h3>
+            <p class="team-role"><%= m.role %></p>
+            <p class="muted"><%= m.bio %></p>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" aria-labelledby="timeline-title">
+    <div class="container">
+      <div class="section-head center"><div><span class="kicker">Milestones</span><h2 id="timeline-title">Fourteen years, one trajectory</h2></div></div>
+      <ol class="timeline">
+        <li><span>2012</span><p>Founded in Peshawar as a two-person web studio.</p></li>
+        <li><span>2015</span><p>First enterprise client — a national logistics relaunch, 3× faster dispatch.</p></li>
+        <li><span>2018</span><p>Crossed 50 launches; opened the UX research practice.</p></li>
+        <li><span>2021</span><p>PSEB registration, Google Partner certification, team of 18.</p></li>
+        <li><span>2023</span><p>ISO-aligned delivery process; cloud/DevOps practice launched.</p></li>
+        <li><span>2026</span><p>30+ people, 130+ launches, clients in 9 countries. Still founder-led.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-panel">
+        <div><h2>Work with a team that cares</h2><p>One call. A fixed proposal in 48 hours. Zero strings.</p></div>
+        <a href="/contact" class="btn btn-light btn-lg">Book a discovery call <%- icon('arrow-right', 18) %></a>
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

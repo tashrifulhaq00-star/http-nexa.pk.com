@@ -1,0 +1,73 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand brand-light" href="/" aria-label="Nexora Digital — home">
+          <svg class="brand-mark" viewBox="0 0 48 48" width="34" height="34" aria-hidden="true">
+            <defs>
+              <linearGradient id="lg-foot" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#818cf8"/><stop offset=".55" stop-color="#6366f1"/><stop offset="1" stop-color="#22d3ee"/>
+              </linearGradient>
+            </defs>
+            <path fill="url(#lg-foot)" d="M24 2 43 13.5v21L24 46 5 34.5v-21L24 2Z"/>
+            <path fill="#0b1020" d="M15.5 33V15h4.6l9.4 12.6V15H34v18h-4.6l-9.4-12.6V33h-4.5Z"/>
+          </svg>
+          <span class="brand-text">Nexora<span class="brand-accent">Digital</span></span>
+        </a>
+        <p>We design, build and grow digital products — websites, apps and brands — for ambitious businesses across Pakistan and beyond.</p>
+        <div class="socials">
+          <a href="https://x.com/nexoradigital" target="_blank" rel="noopener noreferrer" aria-label="Nexora Digital on X"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.244 3H21l-6.6 7.54L22.5 21h-6.04l-4.73-6.18L6.4 21H3.63l7.06-8.07L2.5 3h6.2l4.27 5.66L18.244 3Z"/></svg></a>
+          <a href="https://www.linkedin.com/company/nexora-digital" target="_blank" rel="noopener noreferrer" aria-label="Nexora Digital on LinkedIn"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM4.5 9.75h1v10.75h-1zM9.75 9.75h.96v1.47h.02c.13-.25.46-.82 1.45-.82 1.55 0 2.6 1.02 2.6 2.94v7.16h-1v-6.2c0-1.5-.03-3.4-2.08-3.4-2.08 0-2.4 1.63-2.4 3.3v6.3h-1z"/></svg></a>
+          <a href="https://www.instagram.com/nexoradigital" target="_blank" rel="noopener noreferrer" aria-label="Nexora Digital on Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://github.com/nexora-digital" target="_blank" rel="noopener noreferrer" aria-label="Nexora Digital on GitHub"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.27-.01-1.17-.02-2.12-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.66.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg></a>
+        </div>
+      </div>
+      <nav class="footer-col" aria-label="Services">
+        <h3>Services</h3>
+        <a href="/services/web-development">Web Development</a>
+        <a href="/services/ui-ux-design">UI/UX Design</a>
+        <a href="/services/mobile-apps">Mobile Apps</a>
+        <a href="/services/seo-growth">SEO &amp; Growth</a>
+        <a href="/services/branding">Brand Identity</a>
+        <a href="/services/cloud-devops">Cloud &amp; DevOps</a>
+      </nav>
+      <nav class="footer-col" aria-label="Company">
+        <h3>Company</h3>
+        <a href="/about">About us</a>
+        <a href="/services">All services</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms &amp; Conditions</a>
+        <a href="/dashboard">Client dashboard</a>
+      </nav>
+      <div class="footer-col">
+        <h3>Studio</h3>
+        <p class="footer-contact">
+          Office 4, Pak Tower, Saddar Road<br>Peshawar 25000, Khyber Pakhtunkhwa<br>Pakistan
+        </p>
+        <p class="footer-contact">
+          <a href="mailto:hello@nexora.digital">hello@nexora.digital</a><br>
+          <a href="tel:+92917042040">+92 91 704 2040</a>
+        </p>
+        <form class="newsletter-form" method="POST" action="/newsletter">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <label for="newsletter-email" class="newsletter-label">The Nexora Brief — monthly insights</label>
+          <div class="newsletter-row">
+            <input id="newsletter-email" type="email" name="email" required maxlength="160" placeholder="you@company.com" aria-label="Email for newsletter">
+            <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="footerYear">2026</span> Nexora Digital (Pvt.) Ltd. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="/privacy">Privacy Policy</a>
+        <span aria-hidden="true">·</span>
+        <a href="/terms">Terms &amp; Conditions</a>
+        <span aria-hidden="true">·</span>
+        <button type="button" class="link-btn" id="backToTop">Back to top ↑</button>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,128 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+<%- include('partials/flash') %>
+<main id="main" class="section">
+  <div class="container">
+
+    <!-- Profile header -->
+    <div class="dash-head">
+      <div class="dash-identity">
+        <% if (reqUser.avatar) { %>
+          <img class="avatar-img" src="<%= reqUser.avatar %>" alt="<%= reqUser.name %>'s profile photo" width="84" height="84">
+        <% } else { %>
+          <span class="avatar-initials xl" aria-hidden="true"><%= reqUser.name.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase() %></span>
+        <% } %>
+        <div>
+          <h1>Hello, <%= reqUser.name.split(' ')[0] %> 👋</h1>
+          <p class="muted"><%= reqUser.email %> · <span class="role-pill"><%= reqUser.role === 'admin' ? 'Administrator' : 'Client' %></span></p>
+        </div>
+      </div>
+      <form method="POST" action="/logout" class="inline-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="btn btn-outline btn-sm">Log out</button>
+      </form>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-cards">
+      <div class="stat-card"><span class="stat-value"><%= enquiries.length %></span><span class="stat-label">Enquiries sent</span></div>
+      <div class="stat-card"><span class="stat-value"><%= new Date((reqUser.created_at || '').replace(' ', 'T') + 'Z').getFullYear() || '—' %></span><span class="stat-label">Client since</span></div>
+      <div class="stat-card"><span class="stat-value"><%= reqUser.last_login_at ? new Date(reqUser.last_login_at.replace(' ', 'T') + 'Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '—' %></span><span class="stat-label">Last sign-in</span></div>
+      <div class="stat-card"><span class="stat-value"><%= reqUser.role === 'admin' ? 'Full' : 'Standard' %></span><span class="stat-label">Access level</span></div>
+    </div>
+
+    <div class="dash-grid">
+      <!-- Profile form -->
+      <section class="form-card" aria-labelledby="profile-title">
+        <h2 id="profile-title" class="form-title">Your profile</h2>
+        <form id="profileForm" method="POST" action="/dashboard/profile" enctype="multipart/form-data" novalidate>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="form-row">
+            <div class="field">
+              <label for="p-name">Full name *</label>
+              <input id="p-name" name="name" type="text" required minlength="2" maxlength="80" value="<%= reqUser.name %>" autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="p-phone">Phone</label>
+              <input id="p-phone" name="phone" type="tel" maxlength="20" value="<%= reqUser.phone %>" autocomplete="tel" placeholder="+92 300 0000000">
+            </div>
+          </div>
+          <div class="field">
+            <label for="p-title">Role / company</label>
+            <input id="p-title" name="title" type="text" maxlength="80" value="<%= reqUser.title %>" placeholder="Founder at PakCart">
+          </div>
+          <div class="field">
+            <label for="p-bio">About you <span class="muted">(max 500 chars)</span></label>
+            <textarea id="p-bio" name="bio" rows="3" maxlength="500" placeholder="A sentence or two about you or your company"><%= reqUser.bio %></textarea>
+          </div>
+          <div class="field">
+            <label for="p-avatar">Profile photo <span class="muted">(PNG/JPG/WebP, max 2&nbsp;MB)</span></label>
+            <input id="p-avatar" name="avatar" type="file" accept="image/png,image/jpeg,image/webp">
+            <img id="avatarPreview" class="avatar-preview" alt="Avatar preview" hidden>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <% if (reqUser.avatar) { %>
+              <button type="submit" formaction="/dashboard/avatar/remove" formenctype="application/x-www-form-urlencoded" class="btn btn-ghost">Remove photo</button>
+            <% } %>
+          </div>
+        </form>
+      </section>
+
+      <!-- Change password -->
+      <section class="form-card" aria-labelledby="password-title">
+        <h2 id="password-title" class="form-title">Change password</h2>
+        <form method="POST" action="/dashboard/password" novalidate>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="field">
+            <label for="pw-current">Current password</label>
+            <input id="pw-current" name="current_password" type="password" required autocomplete="current-password">
+          </div>
+          <div class="field">
+            <label for="pw-new">New password</label>
+            <input id="pw-new" name="new_password" type="password" required minlength="8" maxlength="128" autocomplete="new-password" placeholder="Min 8 chars, 1 upper, 1 lower, 1 digit">
+          </div>
+          <div class="field">
+            <label for="pw-confirm">Confirm new password</label>
+            <input id="pw-confirm" name="confirm_password" type="password" required minlength="8" maxlength="128" autocomplete="new-password">
+          </div>
+          <button type="submit" class="btn btn-outline">Update password</button>
+        </form>
+
+        <div class="aside-card flat">
+          <h3>Need a hand?</h3>
+          <p class="muted sm">Forgot your password or locked out? <a class="text-link" href="/contact">Contact your account manager</a> and we'll reset it for you securely (admin-assisted reset — no email links required).</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Enquiries -->
+    <section class="form-card mt" aria-labelledby="enquiries-title">
+      <div class="table-head"><h2 id="enquiries-title" class="form-title">Your enquiries</h2><a class="btn btn-ghost btn-sm" href="/contact">+ New enquiry</a></div>
+      <% if (enquiries.length === 0) { %>
+        <p class="muted">You haven't sent any enquiries yet. <a class="text-link" href="/contact">Tell us about your project →</a></p>
+      <% } else { %>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Date</th><th>Subject</th><th>Message</th><th>Status</th></tr></thead>
+            <tbody>
+              <% enquiries.forEach(function(e) { %>
+                <tr>
+                  <td><%= new Date(e.created_at.replace(' ', 'T') + 'Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) %></td>
+                  <td><%= e.subject %></td>
+                  <td class="cell-clip" title="<%= e.message %>"><%= e.message %></td>
+                  <td><span class="status-pill status-<%= e.status %>"><%= e.status %></span></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </section>
+
+  </div>
+</main>
+<%- include('partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

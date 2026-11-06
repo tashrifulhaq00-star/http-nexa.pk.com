@@ -1,0 +1,16 @@
+<nav class="admin-sidebar" aria-label="Admin panel">
+  <div class="admin-sidebar-head">
+    <span class="admin-badge">Admin</span>
+    <p class="admin-whoami">Signed in as<br><strong><%= user.name %></strong></p>
+  </div>
+  <ul class="admin-nav">
+    <li><a href="/admin" class="<%= active === 'overview' ? 'is-active' : '' %>">Overview</a></li>
+    <li><a href="/admin/users" class="<%= active === 'users' ? 'is-active' : '' %>">Users</a></li>
+    <li><a href="/admin/messages" class="<%= active === 'messages' ? 'is-active' : '' %>">Enquiries</a></li>
+    <li><a href="/admin/services" class="<%= active === 'services' ? 'is-active' : '' %>">Services</a></li>
+    <li><a href="/admin/testimonials" class="<%= active === 'testimonials' ? 'is-active' : '' %>">Testimonials</a></li>
+    <li><a href="/admin/subscribers" class="<%= active === 'subscribers' ? 'is-active' : '' %>">Subscribers</a></li>
+    <li><a href="/admin/activity" class="<%= active === 'activity' ? 'is-active' : '' %>">Audit log</a></li>
+  </ul>
+  <a class="admin-back" href="/dashboard">← Back to client dashboard</a>
+</nav>

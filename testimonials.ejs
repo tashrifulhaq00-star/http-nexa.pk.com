@@ -1,0 +1,51 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<%- include('../partials/flash') %>
+<main id="main" class="section admin-main">
+  <div class="container admin-layout">
+    <%- include('../partials/admin-sidebar') %>
+    <div class="admin-content">
+      <div class="admin-page-head"><h1 class="admin-h1">Testimonials</h1><p class="muted">Curate the social proof shown on the homepage.</p></div>
+
+      <details class="panel create-panel">
+        <summary class="create-summary">+ Add a testimonial</summary>
+        <form method="POST" action="/admin/testimonials" class="service-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="form-row">
+            <div class="field"><label for="t-author">Author *</label><input id="t-author" name="author" required maxlength="80" placeholder="Hassan Raza"></div>
+            <div class="field"><label for="t-rating">Rating</label>
+              <select id="t-rating" name="rating"><% [5,4,3,2,1].forEach(function(r) { %><option value="<%= r %>"><%= r %> star<%= r > 1 ? 's' : '' %></option><% }) %></select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="t-role">Role</label><input id="t-role" name="role" maxlength="80" placeholder="Founder & CEO"></div>
+            <div class="field"><label for="t-company">Company</label><input id="t-company" name="company" maxlength="80" placeholder="PakCart"></div>
+          </div>
+          <div class="field"><label for="t-quote">Quote *</label><textarea id="t-quote" name="quote" required rows="3" maxlength="600" placeholder="At least 10 characters."></textarea></div>
+          <button type="submit" class="btn btn-primary">Add testimonial</button>
+        </form>
+      </details>
+
+      <div class="service-admin-list">
+        <% testimonials.forEach(function(t) { %>
+          <div class="panel testimonial-admin-item <%= t.is_active ? '' : 'is-hidden' %>">
+            <div class="testimonial-admin-head">
+              <span class="stars small"><% for (let i = 0; i < t.rating; i++) { %><%- icon('star', 14) %><% } %></span>
+              <span class="status-pill <%= t.is_active ? 'status-read' : 'status-archived' %>"><%= t.is_active ? 'live' : 'hidden' %></span>
+            </div>
+            <blockquote>“<%= t.quote %>”</blockquote>
+            <p class="muted"><strong><%= t.author %></strong><%= t.role ? ' · ' + t.role : '' %><%= t.company ? ' · ' + t.company : '' %></p>
+            <div class="row-actions">
+              <form method="POST" action="/admin/testimonials/<%= t.id %>/toggle" class="inline-form"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="mini-btn"><%= t.is_active ? 'Hide from site' : 'Publish' %></button></form>
+              <form method="POST" action="/admin/testimonials/<%= t.id %>/delete" class="inline-form" data-confirm="Delete this testimonial permanently?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="mini-btn danger">Delete</button></form>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/main.js" defer></script>
+</body>
+</html>
